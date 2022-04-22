@@ -58,7 +58,12 @@ blackarch ()
 
 zsh ()
 {
-  sudo pacman -S zsh
+ # chsh -s $which /bin/zsh
+  #zsh
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sudo git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
   echo "Es recomendable reiniciar el entorno para aplicarlos cambios"
 
 }
@@ -69,6 +74,9 @@ elif [[ $1 == -p ]]; then
   zsh
 elif [[ $1 == -b ]]; then
   blackarch
+
+elif [[ $1 == -n ]]; then
+  nvchad
 
 else
   echo "No se reconoce el comando, vea ayuda con -h"
