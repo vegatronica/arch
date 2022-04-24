@@ -29,9 +29,13 @@ ayuda ()
 { 
   banner
   echo -e "${yellow}"
-  echo "-b ->Repositorios de BlackArch"
-  echo "-p ->Instala complementos ZSH(PowerLevel10k)"
-  echo "-n ->Complemento Neovim(NvChad)"
+  echo "1 ->Repositorios de BlackArch"
+  echo "2 ->Configura ZSH como Shell por defecto"
+  echo "3 ->Instala Oh-my-Zsh" 
+  echo "4 ->Instala Plugins"
+  echo "5 ->Instala Powerlevel10k"
+  echo "6 ->Instala complemento para Neovim(NVchad)"
+
   echo "-h ->Ayuda"
   echo -e "${end}"
 }
@@ -55,11 +59,15 @@ blackarch ()
   exit
   
 }
-
-zsh ()
+shell ()
 {
- # chsh -s $which /bin/zsh
-  #zsh
+  chsh -s $which /bin/zsh
+  zsh 
+}
+el
+zshcomplementos ()
+{
+
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   sudo git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -68,15 +76,42 @@ zsh ()
 
 }
 
+ohmyzsh ()
+{
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+
+powerlevel10k ()
+{
+  git clone https://github.com/vegatronica/files.git
+  cd files
+  unzip hacknerdfonts.zip
+  sudo cp *.ttf /usr/share/fonts 
+  cd ..
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+}
+
+alias ()
+{
+  echo "alias instalar='sudo pacman -S'" >> .zshrc
+  echo "alias actualizar='sudo pacman -Syu'" >> .zshrc 
+  echo "alias vaciar='sudo rm -rf ~/.local/share/Trash/*'" >> .zshrc
+}
 if [[ $1 == -h ]]; then
  ayuda
-elif [[ $1 == -p ]]; then
-  zsh
-elif [[ $1 == -b ]]; then
+
+elif [[ $1 == 1 ]]; then
   blackarch
 
-elif [[ $1 == -n ]]; then
-  nvchad
+elif [[ $1 == 2 ]]; then
+  shell 
+
+elif [[ $1 == 3 ]]; then
+  powerlevel10k
+
+elif [[ $1 == 4 ]]; then
+  zshcomplementos
 
 else
   echo "No se reconoce el comando, vea ayuda con -h"
