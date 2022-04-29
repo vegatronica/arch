@@ -2,7 +2,7 @@
 
 
 loadkeys us
-
+timedatectl set-ntp true
 echo "ArchLinux Script Install Ver 0.01"
 echo "VEGATRONICA 2022"
 lsblk
@@ -22,7 +22,11 @@ pacstrap /mnt linux linux-firmware base base-devel grub networkmanager wpa_suppl
 
 genfstab -U /mnt > /mnt/etc/fstab
 
-arch-chroot /mnt 
+cat << EOF > /mnt/arch2.sh 
+
+systemctl enable NetworkManager
+ln -sf /usr/share/zoneinfo/America/Mexico /etc/localtime
+hwclock --systohc
 echo "Define Password de ROOT"
 passwd 
 
@@ -49,25 +53,21 @@ sleep 1
 echo "Configurando teclado"
 echo "KEYMAP=us" > /etc/vconsole.conf 
 
-grub-install /dev/sda
-grub-mkconfig /boot/grub/grub.cfg 
-
 read -p "Escribe el nombre de tu maquina" maquina
 
 echo 127.0.0.1 localhost >> hosts
 echo ::1 localhost >> hosts 
 echo 127.0.0.1 $maquina.localhost $maquina 
 
+grub-install /dev/sda
+mkdir /boot/grub
+grub-mkconfig /boot/grub/grub.cfg 
 
 
 
-ayuda () 
-{
-    echo "Este script fue realizado para la version clasica de Arch"
-    echo "las particiones deben ser creadas antes de correr el script"
-    echo ""
-}
-if [[ $1 == -h ]]; then
-ayuda
+EOF
 
-fi
+sudo chmod +x /mnt/arch2.sh 
+arch-chroot /mnt/arch2.sh 
+rm -f /mnt/arch2.sh 
+shutdown -r now 
