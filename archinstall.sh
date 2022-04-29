@@ -18,13 +18,14 @@ swapon
 
 mount /dev/$part1 /mnt 
 
-pacstrap /mnt linux linux-firmware base base-devel grub networkmanager wpa_supplicant nano sudo
+pacstrap /mnt linux linux-firmware base base-devel grub networkmanager wpa_supplicant nano sudo neofetch
 
 genfstab -U /mnt > /mnt/etc/fstab
 
 cat << EOF > /mnt/arch2.sh 
 
 systemctl enable NetworkManager
+systemctl ebnable wpa_supplicant
 ln -sf /usr/share/zoneinfo/America/Mexico /etc/localtime
 hwclock --systohc
 echo "Define Password de ROOT"
@@ -69,5 +70,4 @@ EOF
 
 sudo chmod +x /mnt/arch2.sh 
 arch-chroot /mnt/arch2.sh 
-rm -f /mnt/arch2.sh 
-shutdown -r now 
+
