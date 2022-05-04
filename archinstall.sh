@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-
+#Vegatronica v0.1
 loadkeys us
 timedatectl set-ntp true
 echo "ArchLinux Script Install Ver 0.01"
