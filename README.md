@@ -1,9 +1,8 @@
 # Arch Script Install
 
-Este es un script que estoy desarrollando para la version *clasica* de Arch, no prentede
+Este es un script que estoy desarrollando para la version *clasica* de Arch, no pretende
 ser una version mejorada del ya existente, solamente es una version adaptada a mis necesidades
 espero le pueda agregar mejoras en el futuro proximo.
-
 
 
 # Arch Script
