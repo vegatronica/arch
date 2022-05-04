@@ -25,7 +25,7 @@ genfstab -U /mnt > /mnt/etc/fstab
 cat << EOF > /mnt/arch2.sh 
 
 systemctl enable NetworkManager
-systemctl ebnable wpa_supplicant
+systemctl enable wpa_supplicant
 ln -sf /usr/share/zoneinfo/America/Mexico /etc/localtime
 hwclock --systohc
 echo "Define Password de ROOT"
@@ -63,8 +63,6 @@ echo 127.0.0.1 $maquina.localhost $maquina
 grub-install /dev/sda
 mkdir /boot/grub
 grub-mkconfig /boot/grub/grub.cfg 
-
-
 
 EOF
 
